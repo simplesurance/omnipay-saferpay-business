@@ -1,8 +1,8 @@
 <?php
 
-namespace Bamarni\Omnipay\Saferpay\Business\Tests;
+namespace Sisu\Omnipay\Saferpay\Business\Tests;
 
-use Bamarni\Omnipay\Saferpay\Business\Gateway;
+use Sisu\Omnipay\Saferpay\Business\Gateway;
 use Omnipay\Tests\GatewayTestCase;
 
 class GatewayTest extends GatewayTestCase
@@ -27,7 +27,7 @@ class GatewayTest extends GatewayTestCase
             'IBAN' => 'DE17970000011234567890',
         ])->send();
 
-        $this->assertInstanceOf('\Bamarni\Omnipay\Saferpay\Business\Message\CompleteAuthorizeResponse', $response);
+        $this->assertInstanceOf('\Sisu\Omnipay\Saferpay\Business\Message\CompleteAuthorizeResponse', $response);
         $this->assertTrue($response->isSuccessful());
 
         $this->assertEquals('Y29lE1bjxztCSAAfW85UA96I6Utb', $response->getTransactionReference());

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bamarni\Omnipay\Saferpay\Business\Message;
+namespace Sisu\Omnipay\Saferpay\Business\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;

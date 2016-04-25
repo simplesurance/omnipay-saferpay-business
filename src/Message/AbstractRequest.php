@@ -1,8 +1,8 @@
 <?php
 
-namespace Bamarni\Omnipay\Saferpay\Business\Message;
+namespace Sisu\Omnipay\Saferpay\Business\Message;
 
-use Bamarni\Omnipay\Saferpay\Business\Parameters;
+use Sisu\Omnipay\Saferpay\Business\Parameters;
 use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
 
 abstract class AbstractRequest extends BaseAbstractRequest

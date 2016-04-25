@@ -1,5 +1,5 @@
 {
-    "name": "bamarni/omnipay-saferpay-business",
+    "name": "simplesurance/omnipay-saferpay-business",
     "description": "Saferpay Business payment gateway for Omnipay",
     "type": "omnipay-gateway",
     "keywords": ["omnipay", "payment", "gateway", "saferpay", "business", "provider"],
@@ -8,14 +8,18 @@
         {
             "name": "Bilal Amarni",
             "email": "bilal.amarni@gmail.com"
+        },
+        {
+            "name": "simplesurance GmbH",
+            "email": "info@simplesurance.de"
         }
     ],
     "autoload": {
-        "psr-4": { "Bamarni\\Omnipay\\Saferpay\\Business\\" : "src/" }
+        "psr-4": { "Sisu\\Omnipay\\Saferpay\\Business\\" : "src/" }
     },
     "autoload-dev": {
         "psr-4": {
-            "Bamarni\\Omnipay\\Saferpay\\Business\\Tests\\" : "tests/"
+            "Sisu\\Omnipay\\Saferpay\\Business\\Tests\\" : "tests/"
         }
     },
     "require": {
