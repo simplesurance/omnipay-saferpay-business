@@ -26,6 +26,12 @@ class CompleteAuthorizeRequest extends AbstractRequest
             $data['PAN'] = $card->getNumber();
             $data['EXP'] = $card->getExpiryDate('my');
             $data['CVC'] = $card->getCvv();
+
+            if ('yes' === $this->getInstallment()) {
+                $data['INSTALLMENT']    = 'yes';
+                $data['INSTCOUNT']      = $this->getInstCount();
+                $data['REFID']          = $this->getRefId();
+            }
         } elseif (!$data['IBAN']) {
             $this->validate('bankCode', 'bankAccountNumber');
 
@@ -89,6 +95,106 @@ class CompleteAuthorizeRequest extends AbstractRequest
     public function setBankAccountNumber($value)
     {
         return $this->setParameter('bankAccountNumber', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getInstallment()
+    {
+        return $this->getParameter('installment');
+    }
+
+    /**
+     * Flags the payment request as installment payment.
+     * Must be set for initial installment payment and
+     * all following installment payments.
+     *
+     * @param   $value    Values: "yes" or "no"
+     *
+     * @return  $this
+     *
+     * @throws  InvalidRequestException
+     */
+    public function setInstallment($value)
+    {
+        if (!in_array($value, ['yes', 'no'])) {
+            throw new InvalidRequestException(
+                sprintf('Invalid installment value "%s". Allowed values are "yes" and "no".', $value)
+            );
+        }
+
+        return $this->setParameter('installment', $value);
+    }
+
+    /**
+     * @return int
+     */
+    public function getInstCount()
+    {
+        return $this->getParameter('instCount');
+    }
+
+    /**
+     * Number of installments as agreed between merchant and
+     * customer. INSTCOUNT is mandatory for the initial
+     * installment payment and not necessary for following
+     * installment payments!
+     *
+     * @param   $value  Minimum value is "2"
+     *
+     * @return  $this
+     *
+     * @throws  InvalidRequestException
+     */
+    public function setInstCount($value)
+    {
+        if (!is_int($value) || $value < 2) {
+            throw new InvalidRequestException(
+                sprintf('Invalid instCount value "%s". The value must be an "integer" and at least "2".', $value)
+            );
+        }
+
+        return $this->setParameter('instCount', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getRefId()
+    {
+        return $this->getParameter('refId');
+    }
+
+    /**
+     * Uses the transaction identifier of the initial payment to refer to
+     * following recurring or installment payments.
+     *
+     * @param   $value  ID of the initial payment
+     *
+     * @return  $this
+     */
+    public function setRefId($value)
+    {
+        return $this->setParameter('refId', $value);
+    }
+
+    public function getRefOid()
+    {
+        return $this->getParameter('refOid');
+    }
+
+    /**
+     * Uses the reference number of the initial payment to refer to
+     * following recurring or installment payments.
+     *
+     * @param   $value  ORDERID of the initial payment
+     *
+     * @return  $this
+     */
+    public function setRefOid($value)
+    {
+        return $this->setParameter('refOid', $value);
     }
 
     protected function createResponse($response)
