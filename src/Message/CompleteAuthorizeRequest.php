@@ -6,6 +6,8 @@ use Omnipay\Common\Exception\InvalidRequestException;
 
 class CompleteAuthorizeRequest extends AbstractRequest
 {
+    protected $endpoint = 'execute.asp';
+
     public function getData()
     {
         $this->validate('accountId', 'spPassword', 'amount');
@@ -87,11 +89,6 @@ class CompleteAuthorizeRequest extends AbstractRequest
     public function setBankAccountNumber($value)
     {
         return $this->setParameter('bankAccountNumber', $value);
-    }
-
-    protected function getEndpoint()
-    {
-        return 'https://www.saferpay.com/hosting/execute.asp';
     }
 
     protected function createResponse($response)

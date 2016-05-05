@@ -4,6 +4,8 @@ namespace Bamarni\Omnipay\Saferpay\Business\Message;
 
 class RegisterCardRequest extends AbstractRequest
 {
+    protected $endpoint = 'CreatePayInit.asp';
+
     public function getCardRefId()
     {
         return $this->getParameter('cardRefId');
@@ -45,11 +47,6 @@ class RegisterCardRequest extends AbstractRequest
         );
 
         return $data;
-    }
-
-    protected function getEndpoint()
-    {
-        return 'https://www.saferpay.com/hosting/CreatePayInit.asp';
     }
 
     protected function createResponse($response)
