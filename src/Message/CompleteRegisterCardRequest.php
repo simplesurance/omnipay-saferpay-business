@@ -4,6 +4,8 @@ namespace Bamarni\Omnipay\Saferpay\Business\Message;
 
 class CompleteRegisterCardRequest extends AbstractRequest
 {
+    protected $endpoint = 'VerifyPayConfirm.asp';
+
     public function getData()
     {
         $data = array(
@@ -14,11 +16,6 @@ class CompleteRegisterCardRequest extends AbstractRequest
         );
 
         return $data;
-    }
-
-    protected function getEndpoint()
-    {
-        return 'https://www.saferpay.com/hosting/VerifyPayConfirm.asp';
     }
 
     protected function createResponse($response)

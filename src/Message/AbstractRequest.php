@@ -7,6 +7,9 @@ use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
 
 abstract class AbstractRequest extends BaseAbstractRequest
 {
+    const BASE_URL = 'https://www.saferpay.com/hosting/';
+    const BASE_URL_TEST = 'https://test.saferpay.com/hosting/';
+
     use Parameters;
 
     public function send()
@@ -23,7 +26,10 @@ abstract class AbstractRequest extends BaseAbstractRequest
         throw new \BadMethodCallException('This method is unimplemented');
     }
 
-    abstract protected function getEndpoint();
+    protected function getEndpoint()
+    {
+        return ($this->getTestMode() ? self::BASE_URL_TEST : self::BASE_URL) . $this->endpoint;
+    }
 
     abstract protected function createResponse($response);
 }
