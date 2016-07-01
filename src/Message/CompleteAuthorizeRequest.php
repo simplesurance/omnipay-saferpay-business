@@ -17,10 +17,21 @@ class CompleteAuthorizeRequest extends AbstractRequest
             'spPassword' => $this->getSpPassword(),
             'AMOUNT' => $this->getAmountInteger(),
             'CURRENCY' => $this->getCurrency(),
-            'NAME' => $this->getCardHolderName(),
-            'IBAN' => $this->getIban(),
-            'MANDATEID' => $this->getMandateId(),
         ];
+
+        // In case of recurring payments we can return right away.
+        if ('yes' === $this->getRecurring()) {
+            return $this->prepareRecurringData($data);
+        }
+
+        $data = array_merge(
+            $data,
+            [
+                'NAME' => $this->getCardHolderName(),
+                'IBAN' => $this->getIban(),
+                'MANDATEID' => $this->getMandateId()
+            ]
+        );
 
         if ($card = $this->getCard()) {
             $data['PAN'] = $card->getNumber();
@@ -91,8 +102,57 @@ class CompleteAuthorizeRequest extends AbstractRequest
         return $this->setParameter('bankAccountNumber', $value);
     }
 
+    public function getCardRefId()
+    {
+        return $this->getParameter('cardRefId');
+    }
+
+    public function setCardRefId($value)
+    {
+        return $this->setParameter('cardRefId', $value);
+    }
+
+    public function getRecurring()
+    {
+        return $this->getParameter('recurring');
+    }
+
+    public function setRecurring($value)
+    {
+        return $this->setParameter('recurring', $value);
+    }
+
+    public function getRefId()
+    {
+        return $this->getParameter('refId');
+    }
+
+    public function setRefId($value)
+    {
+        return $this->setParameter('refId', $value);
+    }
+
     protected function createResponse($response)
     {
         return new CompleteAuthorizeResponse($this, $response);
+    }
+
+    /**
+     * Returns the required data for recurring payments.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function prepareRecurringData(array $data)
+    {
+        return array_merge(
+            $data,
+            [
+                'RECURRING' => 'YES',
+                'REFID' => $this->getRefId(),
+                'CARDREFID' => $this->getCardRefId()
+            ]
+        );
     }
 }
