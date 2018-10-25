@@ -19,15 +19,10 @@
         }
     },
     "require": {
-        "php": ">=5.4",
-        "omnipay/common": "~2.0"
+        "php": ">=7.0",
+        "omnipay/common": "~3.0"
     },
     "require-dev": {
-        "omnipay/tests": "~2.0@dev"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.x-dev"
-        }
+        "omnipay/tests": "*"
     }
 }
