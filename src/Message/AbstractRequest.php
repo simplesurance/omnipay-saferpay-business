@@ -12,11 +12,13 @@ abstract class AbstractRequest extends BaseAbstractRequest
 
     use Parameters;
 
+    protected $endpoint;
+
     public function send()
     {
         $url = $this->getEndpoint().'?'.http_build_query($this->getData());
 
-        $httpResponse = $this->httpClient->get($url)->send();
+        $httpResponse = $this->httpClient->request('GET', $url);
 
         return $this->response = $this->createResponse($httpResponse);
     }
