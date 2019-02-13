@@ -51,6 +51,7 @@ class RegisterCardRequest extends AbstractRequest
 
     protected function createResponse($response)
     {
-        return $this->response = new RegisterCardResponse($this, $response->getBody());
+        /** @var \GuzzleHttp\Psr7\Response $response */
+        return $this->response = new RegisterCardResponse($this, (string) $response->getBody());
     }
 }
