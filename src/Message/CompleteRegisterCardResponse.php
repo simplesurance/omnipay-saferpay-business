@@ -9,9 +9,13 @@ class CompleteRegisterCardResponse extends AbstractResponse
 {
     protected $successful = false;
 
+    /**
+     * @param RequestInterface          $request
+     * @param \GuzzleHttp\Psr7\Response $response
+     */
     public function __construct(RequestInterface $request, $response)
     {
-        $body = $response->getBody(true);
+        $body = (string) $response->getBody();
 
         if (0 === strpos($body, 'OK:RESULT=0')) {
             $this->successful = true;

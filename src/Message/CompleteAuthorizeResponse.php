@@ -9,16 +9,19 @@ class CompleteAuthorizeResponse extends AbstractResponse
 {
     protected $successful = false;
 
+    /**
+     * @param RequestInterface          $request
+     * @param \GuzzleHttp\Psr7\Response $response
+     */
     public function __construct(RequestInterface $request, $response)
     {
-        $body = $response->getBody(true);
+        $body = (string) $response->getBody();
 
         if (0 === strpos($body, 'OK:')) {
-            $response->setBody(substr($body, 3));
-            $data = $response->xml();
+            $data = simplexml_load_string(substr($body, 3));
             $result = (string) $data->attributes()->RESULT;
 
-            if ('0' == $result) {
+            if ('0' === $result) {
                 $this->successful = true;
             }
         }
@@ -40,6 +43,8 @@ class CompleteAuthorizeResponse extends AbstractResponse
         if ($this->successful) {
             return (string) $this->data->attributes()->ID;
         }
+
+        return null;
     }
 
     public function getMessage()
